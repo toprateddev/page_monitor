@@ -668,11 +668,18 @@ function addPageToTable(a) {
     f.bind("time_updated", function() {
         var b = $(this);
         getPage(a.url, function(a) {
-            var c = a.last_check ? describeTimeSince(a.last_check) :
-                chrome.i18n.getMessage("never");
-            c != b.text() && b.fadeOut("slow", function() {
-                b.text(c).fadeIn("slow")
-            })
+            if (a) {
+                var c = a.last_check ? describeTimeSince(a.last_check) :
+                    chrome.i18n.getMessage("never");
+                c != b.text() && b.fadeOut("slow", function() {
+                    b.text(c).fadeIn("slow")
+                })
+            } else {
+                var c = chrome.i18n.getMessage("never");
+                c != b.text() && b.fadeOut("slow", function() {
+                    b.text(c).fadeIn("slow")
+                });
+            }
         })
     });
     f.trigger("time_updated");
