@@ -20,6 +20,9 @@
    "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXkbhIjDC34WcIanOW2pHCBc6xs0D6A8U1XXye+v5F6NIWLqmjnFtv8MSu/YRBu+Rbz4QCd2nYuDrSab3adPTPrAAz6Y9zgSdu2LjiQfwxR2n4XhxPXKtkS18c2Hhe8jesuB1zGZ9FaVEYnE9L5ohuLrGQ/i1MIna6+D33uP+eyQIDAQAB",
    "manifest_version": 2,
    "name": "__MSG_name__",
+   "web_accessible_resources": [
+      "img/arrow.gif"
+   ],
    "options_page": "options.htm",
    "permissions": [ "tabs", "*://*/", "chrome://favicon/", "unlimitedStorage", "notifications", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",

@@ -142,6 +142,8 @@ function syncStorageHandler() {
         tx.executeSql("DROP TABLE pages", [], function(tx, result) {
             initializeStorage();
             chrome.storage.sync.get("data", function(data) {
+                if (!data.data)
+                    return;
                 for (var i = 0; i < data.data.length; i++) {
                     var row = data.data[i];
                     addPage($.extend({

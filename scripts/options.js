@@ -719,3 +719,7 @@ function init() {
     chrome.extension.onRequest.addListener(selectorServer);
     fillPagesList()
 };
+
+$(document).ready(function() {
+    $('#import_from_storage').click(syncStorageHandler);
+});
