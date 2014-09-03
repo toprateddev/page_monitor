@@ -90,9 +90,9 @@ function getSetting(a, b) {
     }
 }
 
-function setSyncStorageUpdateTime() {
+function setupdateTime() {
     var curTime = (new Date).getTime();
-    localStorage.setItem("syncStorageUpdateTime", curTime);
+    localStorage.setItem("updateTime", curTime);
     chrome.storage.sync.set({updateTime: curTime});
 }
 
@@ -110,10 +110,10 @@ function setSetting(a, b, c) {
     }
 
     console.log(a + " updated so that the value should be updated in syncStorage.");
-    localStorage.setItem("syncStorageUpdateTime", curTime);
+    localStorage.setItem("updateTime", curTime);
     chrome.storage.sync.set({updateTime: curTime});
     temp[a] = b;
-    temp.syncStorageUpdateTime = curTime;
+    temp.updateTime = curTime;
     chrome.storage.sync.set(temp);
 }
 
@@ -146,7 +146,7 @@ function updateSyncStorage() {
                 data.push(item);
             }
             var curTime = (new Date).getTime();
-            localStorage.setItem("syncStorageUpdateTime", curTime);
+            localStorage.setItem("updateTime", curTime);
             chrome.storage.sync.set({updateTime: curTime, data: data});
         })
     })
