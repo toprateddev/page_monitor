@@ -80,8 +80,12 @@ function applyLocalization() {
 }
 
 function getSetting(a, b) {
-    if (b == undefined || b == null)
-        return JSON.parse(localStorage.getItem(a) || "null");
+    if (b == undefined || b == null) {
+        if ( a == "sort_by" )
+            return localStorage.getItem(a);
+        else
+            return JSON.parse(localStorage.getItem(a) || "null");
+    }
     else {
         if (b)
             return JSON.parse(chrome.storage.sync.getItem(a) || "null");

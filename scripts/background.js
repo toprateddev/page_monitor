@@ -263,7 +263,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                                 namespace,
                                 storageChange.oldValue,
                                 storageChange.newValue);
-                    localStorage.setItem(key, storageChange);
+                    localStorage.setItem(key, storageChange.newValue);
                 }
             } else {
                 console.log("Local web SQL database should be updated.");
