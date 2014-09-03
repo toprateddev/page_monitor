@@ -90,6 +90,12 @@ function getSetting(a, b) {
     }
 }
 
+function setSyncStorageUpdateTime() {
+    var curTime = (new Date).getTime();
+    localStorage.setItem("syncStorageUpdateTime", curTime);
+    chrome.storage.sync.set({updateTime: curTime});
+}
+
 function setSetting(a, b, c) {
     if (c == undefined || c == null)
         localStorage.setItem(a, JSON.stringify(b));
@@ -99,6 +105,8 @@ function setSetting(a, b, c) {
         else
             chrome.storage.local.setItem(a, JSON.stringify(b));
     }
+    setSyncStorageUpdateTime();
+    chrome.storage.sync.set({localStorage: localStorage});
 }
 
 function delSetting(a, b) {
