@@ -230,28 +230,8 @@ function bringUpToDate(b, a) {
 };
 
 
-// function syncStorageHandler() {
-//     DB.transaction(function(tx) {
-//         tx.executeSql("DROP TABLE pages", [], function(tx, result) {
-//             initializeStorage();
-//             chrome.storage.sync.get("data", function(data) {
-//                 for (var i = 0; i < data.length; i++) {
-//                     var row = data[i];
-//                     addPage($.extend({
-//                         url: row.url,
-//                         name: row.name,
-//                         mode: row.mode
-//                     }));
-//                 }
-//             })
-//         });
-//     });
-// }
-
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (namespace == "sync") {
-        if (changes["updateTime"] == null)
-            return;
 
         if (changes.updateTime.newValue > parseInt(localStorage.getItem("updateTime"))) {
             if (!changes["data"]) {
@@ -273,7 +253,5 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
             }
         } else
             return;
-    } else {
-        alert("Hello, you found it.");
     }
 });
