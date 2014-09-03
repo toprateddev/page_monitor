@@ -253,11 +253,11 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
         if (changes["updateTime"] == null)
             return;
 
-        if (changes.updateTime.newValue != parseInt(localStorage.getItem("syncStorageUpdateTime"))) {
-            if (changes["localStorage"]) {
+        if (changes.updateTime.newValue > parseInt(localStorage.getItem("syncStorageUpdateTime"))) {
+            if (!changes["data"]) {
                 console.log("local storage should be synchronized...");
             } else {
-                console.log("Should be updated in local web SQL database.");
+                console.log("Local web SQL database should be updated.");
                 console.log("Synchronizing...");
                 syncStorageHandler();
                 localStorage.setItem("syncStorageUpdateTime", changes.updateTime.newValue);
@@ -273,5 +273,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
             }
         } else
             return;
+    } else {
+        alert("Hello, you found it.");
     }
 });
