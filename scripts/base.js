@@ -88,9 +88,9 @@ function getSetting(a, b) {
     }
     else {
         if (b)
-            return JSON.parse(chrome.storage.sync.getItem(a) || "null");
+            return JSON.parse(chrome.storage.sync.get(a) || "null");
         else
-            return JSON.parse(chrome.storage.local.getItem(a) || "null");
+            return JSON.parse(chrome.storage.local.get(a) || "null");
     }
 }
 
@@ -115,7 +115,6 @@ function setSetting(a, b, c) {
 
     console.log(a + " updated so that the value should be updated in syncStorage.");
     localStorage.setItem("updateTime", curTime);
-    chrome.storage.sync.set({updateTime: curTime});
     temp[a] = b;
     temp.updateTime = curTime;
     chrome.storage.sync.set(temp);
@@ -126,9 +125,9 @@ function delSetting(a, b) {
         localStorage.removeItem(a);
     else {
         if (b)
-            chrome.storage.sync.removeItem(a);
+            chrome.storage.sync.remove(a);
         else
-            chrome.storage.local.removeItem(a);
+            chrome.storage.local.remove(a);
     }
 }
 
