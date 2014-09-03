@@ -81,7 +81,7 @@ function applyLocalization() {
 
 function getSetting(a, b) {
     if (b == undefined || b == null) {
-        if ( a == "sort_by" )
+        if ( a == "sort_by" || a == "view_all_action" || a == "sound_alert" )
             return localStorage.getItem(a);
         else
             return JSON.parse(localStorage.getItem(a) || "null");

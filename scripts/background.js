@@ -233,25 +233,24 @@ function bringUpToDate(b, a) {
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (namespace == "sync") {
 
-        if (changes.updateTime.newValue > parseInt(localStorage.getItem("updateTime"))) {
-            if (!changes["data"]) {
-                for(key in changes) {
-                    var storageChange = changes[key];
-                    console.log('Storage key "%s" i namespace "%s" changed. '
-                                    + 'Old value was "%s", new value is "%s".',
-                                key,
-                                namespace,
-                                storageChange.oldValue,
-                                storageChange.newValue);
-                    localStorage.setItem(key, storageChange.newValue);
-                }
-            } else {
+        if (!changes["data"]) {
+            for(key in changes) {
+                var storageChange = changes[key];
+                console.log('Storage key "%s" i namespace "%s" changed. '
+                                + 'Old value was "%s", new value is "%s".',
+                            key,
+                            namespace,
+                            storageChange.oldValue,
+                            storageChange.newValue);
+                localStorage.setItem(key, storageChange.newValue);
+            }
+        } else {
+            if (changes.updateTime.newValue > parseInt(localStorage.getItem("updateTime"))) {
                 console.log("Local web SQL database should be updated.");
                 console.log("Synchronizing...");
                 syncStorageHandler();
                 localStorage.setItem("updateTime", changes.updateTime.newValue);
             }
-        } else
-            return;
+        }
     }
 });
