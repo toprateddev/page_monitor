@@ -105,8 +105,9 @@ function setSetting(a, b, c) {
         else
             chrome.storage.local.setItem(a, JSON.stringify(b));
     }
+    console.log(a + " updated so that the value should be updated in syncStorage.");
     setSyncStorageUpdateTime();
-    chrome.storage.sync.set({localStorage: localStorage});
+    chrome.storage.sync.set({a: b});
 }
 
 function delSetting(a, b) {
