@@ -81,12 +81,11 @@ function applyLocalization() {
 
 function getSetting(a, b) {
     if (b == undefined || b == null) {
-        if ( a == "sort_by" || a == "view_all_action" || a == "sound_alert" )
-            return localStorage.getItem(a);
-        else
-            return JSON.parse(localStorage.getItem(a) || "null");
-    }
-    else {
+        // if ( a == "sort_by" || a == "view_all_action" || a == "sound_alert" )
+        //     return localStorage.getItem(a);
+        // else
+        return JSON.parse(localStorage.getItem(a) || "null");
+    } else {
         if (b)
             return JSON.parse(chrome.storage.sync.get(a) || "null");
         else
@@ -115,7 +114,7 @@ function setSetting(a, b, c) {
 
     console.log(a + " updated so that the value should be updated in syncStorage.");
     localStorage.setItem("updateTime", curTime);
-    temp[a] = b;
+    temp[a] = JSON.stringify(b);
     temp.updateTime = curTime;
     chrome.storage.sync.set(temp);
 }
