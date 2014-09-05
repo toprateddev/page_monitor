@@ -245,11 +245,18 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                 localStorage.setItem(key, storageChange.newValue);
             }
         } else {
-            if (changes.updateTime.newValue > parseInt(localStorage.getItem("updateTime"))) {
+            if (!changes.updateTime) {
+                console.log("Local web SQL database should be updated.");
+                console.log("Synchronizing...");
+                syncStorageHandler();
+                localStorage.setItem("updateTime", (new Date()).getTime());
+            } else if (changes.updateTime.newValue > parseInt(localStorage.getItem("updateTime"))) {
                 console.log("Local web SQL database should be updated.");
                 console.log("Synchronizing...");
                 syncStorageHandler();
                 localStorage.setItem("updateTime", changes.updateTime.newValue);
+            } else {
+                console.log("This change was invalid on this machine...");
             }
         }
     }
