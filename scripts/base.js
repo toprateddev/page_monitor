@@ -145,6 +145,9 @@ function updateSyncStorage() {
                 item.url = row.url;
                 item.name = row.name;
                 item.mode = row.mode;
+                item.selector = row.selector;
+                item.regex = row.regex;
+                item.check_interval = row.check_interval;
                 data.push(item);
             }
             var curTime = (new Date).getTime();
@@ -166,7 +169,10 @@ function syncStorageHandler() {
                     addPage($.extend({
                         url: row.url,
                         name: row.name,
-                        mode: row.mode
+                        mode: row.mode,
+                        selector: row.selector,
+                        regex: row.regex,
+                        check_interval: row.check_interval
                     }));
                 }
             })
