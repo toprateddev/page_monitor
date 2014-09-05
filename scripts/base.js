@@ -159,7 +159,7 @@ function updateSyncStorage() {
 
 function syncStorageHandler() {
     DB.transaction(function(tx) {
-        tx.executeSql("DROP TABLE pages", [], function(tx, result) {
+        tx.executeSql("DELETE FROM pages", [], function(tx, result) {
             initializeStorage();
             chrome.storage.sync.get("data", function(data) {
                 if (!data.data)
@@ -228,7 +228,7 @@ function setPageSettings(a, b, d) {
         f;
     for (f in b) c.push(f + " = ?"), "boolean" == typeof b[f] && (b[f] = new Number(b[f])), e.push(b[f]);
     e.push(a);
-    c ? (a = "UPDATE pages SET " + c.join(", ") + " WHERE url = ?", executeSql(a, e, null, d)) : (d || $.noop)()
+    c ? (a = "UPDATE pages SET " + c.join(", ") + " WHERE url = ?", executeSql(a, e, null, d, true)) : (d || $.noop)()
 }
 
 function addPage(a, b) {

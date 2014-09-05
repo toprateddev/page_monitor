@@ -54,14 +54,16 @@ function updatePageModeControls(a, b) {
     a.find(".mode .mode_string").toggleClass("invalid", !b);
     a.find(".mode .mode_test").attr({
         disabled: !b
-    })
+    });
+    updateSyncStorage();
 }
 
 function setPageCheckInterval(a, b) {
     var c = 6E4 * parseFloat(b) || null;
     setPageSettings(a, {
         check_interval: c
-    }, BG.scheduleCheck)
+    }, BG.scheduleCheck);
+    updateSyncStorage();
 }
 
 function setPageRegexOrSelector(a, b, c) {
