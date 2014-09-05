@@ -166,14 +166,29 @@ function syncStorageHandler() {
                     return;
                 for (var i = 0; i < data.data.length; i++) {
                     var row = data.data[i];
-                    addPage($.extend({
-                        url: row.url,
-                        name: row.name,
-                        mode: row.mode,
-                        selector: row.selector,
-                        regex: row.regex,
-                        check_interval: row.check_interval
-                    }));
+                    executeSql("REPLACE INTO pages(url, name, mode, regex, selector, check_interval, last_changed) VALUES(?, ?, ?, ?, ?, ?, ?)", 
+                                [
+                                    row.url, 
+                                    row.name || chrome.i18n.getMessage("untitled", row.url), 
+                                    row.mode || "text", 
+                                    row.regex || null, 
+                                    row.selector || null, 
+                                    row.check_interval || null,
+                                    Date.now()
+                                ],
+                                null, function() {
+                                    BG.takeSnapshot();
+                                    BG.scheduleCheck();
+                                    (null || $.noop)()
+                                });
+                    // addPage($.extend({
+                    //     url: row.url,
+                    //     name: row.name,
+                    //     mode: row.mode,
+                    //     selector: row.selector,
+                    //     regex: row.regex,
+                    //     check_interval: row.check_interval
+                    // }));
                 }
             })
         });
