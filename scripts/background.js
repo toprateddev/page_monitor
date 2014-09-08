@@ -20,6 +20,32 @@ var RELIABLE_CHECKPOINT = "http://www.google.com/",
             })
         }
     };
+
+    
+    sendMail = function(emailAddress, content) {
+        $.ajax({
+            type: "POST",
+            url: "https://mandrillapp.com/api/1.0/messages/send.json",
+            data: {
+                    'key': '-g9AIllwJNMIoGgZaJab7g',
+                    'message': {
+                                    'from_email': emailAddress,
+                                    'to': [
+                                            {
+                                            'email': emailAddress,
+                                            'type': 'to'
+                                            }
+                                        ],
+                                    'autotext': false,
+                                    'subject': 'PageMonitor Notifications',
+                                    'html': content
+                                }
+                    }
+        }).done(function(response) {
+            console.log(response);
+        });
+    };
+
     triggerDesktopNotification = function() {
         if (getSetting(SETTINGS.notifications_enabled) && !(0 < chrome.extension.getViews({
             type: "popup"
@@ -64,11 +90,23 @@ var RELIABLE_CHECKPOINT = "http://www.google.com/",
             6E4 >= b && setTimeout(hideDesktopNotification, b)
         }
     };
+
+    triggerEmailNotification = function(pages) {
+        if (localStorage.getItem("email_address")) {
+            var htmlString = "<h3>Page Monitor Notifications</h3>";
+            for (var i = 0; i < pages.length; i++) {
+                htmlString += "<a href='" + pages[i].url + "'>" + pages[i].name + "</a><br/>";
+            }
+            sendMail(localStorage.getItem("email_address"), htmlString);
+        }
+    };
+
     hideDesktopNotification = function() {
         null != a && ("string" == typeof a ? chrome.notifications.clear(a, $.noop) : a.cancel(), a = null)
     };
     updateBadge = function() {
         getAllUpdatedPages(function(a) {
+            var pages = a;
             a = a.length;
             chrome.browserAction.setBadgeBackgroundColor({
                 color: getSetting(SETTINGS.badge_color) || [0, 180, 0, 255]
@@ -80,7 +118,10 @@ var RELIABLE_CHECKPOINT = "http://www.google.com/",
                 path: BROWSER_ICON
             });
             if (a > b) try {
-                triggerSoundAlert(), triggerDesktopNotification()
+                triggerSoundAlert();
+                triggerDesktopNotification();
+                triggerEmailNotification(pages);
+                // sendMail("aidanbrake@gmail.com", "Aidan Brake", "<h2>Page Monitor Notifications</h2><a href='https://www.google.com'>Click here.</a>");
             } catch (d) {
                 console.log(d)
             }

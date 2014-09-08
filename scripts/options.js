@@ -123,6 +123,7 @@ function importPagesList(a) {
 
 function initializeGlobalControls() {
     initializeColorPicker();
+    initializeEmailAddress();
     initializeAnimationToggler();
     initializeSorter();
     initializeIntervalSliders();
@@ -151,6 +152,18 @@ function initializeColorPicker() {
         setSetting(SETTINGS.badge_color, [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16), 255]);
         BG.updateBadge()
     }).colorPicker()
+}
+
+function initializeEmailAddress() {
+    $('#email_address').change(function() {
+        var $el = $(event.target);
+
+        if ($el.val() != "") {
+            localStorage.setItem("email_address", $el.val());
+        } else {
+            localStorage.removeItem("email_address");
+        }
+    })
 }
 
 function initializeAnimationToggler() {

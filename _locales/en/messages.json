@@ -199,6 +199,10 @@
       "description": "Label for the desktop notifications checkbox.",
       "message": "Desktop Notifications"
    },
+   "emailNotifications": {
+      "description": "Label for the e-mail address input.",
+      "message": "Email Notifications"
+   },
    "notifications_timeout": {
       "description": "Label for the desktop notifications timeout textbox.",
       "message": "Notifications Stay"
