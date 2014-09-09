@@ -155,6 +155,12 @@ function initializeColorPicker() {
 }
 
 function initializeEmailAddress() {
+    if (localStorage.getItem("email_address")) {
+        $('#email_address').val(localStorage.getItem("email_address"));
+    } else {
+        $('#email_address').val("");
+    }
+
     $('#email_address').change(function() {
         var $el = $(event.target);
 
